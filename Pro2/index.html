@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="calculator">
+    <div id="result"></div>
+    <div class="center">
+      <button onclick="handleNumber(1)">1</button>
+      <button onclick="handleNumber(2)">2</button>
+      <button onclick="handleNumber(3)">3</button>
+      <button onclick="handleNumber(4)">4</button>
+      <button onclick="handleNumber(5)">5</button>
+      <button onclick="handleNumber(6)">6</button>
+      <button onclick="handleNumber(7)">7</button>
+      <button onclick="handleNumber(8)">8</button>
+      <button onclick="handleNumber(9)">9</button>
+    </div>
+    <div class="center">
+      <button onclick="handleNumber(0)">0</button>
+    </div>
+    <div class="CalculationButtons">
+      <button onclick="handleOperation('+')">+</button>
+      <button onclick="handleOperation('-')">-</button>
+      <button onclick="handleOperation('*')">*</button>
+      <button onclick="handleOperation('/')">/</button>
+      <button id="total" onclick="calculateResult()">=</button>
+      <button id="clear" onclick="clearResult()">Clear</button>
+    </div>
+  </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,191 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container-elements {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px; 
+}
+
+.cell {
+    background-color: white;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.cell:hover {
+    background-color: lightgray;
+}
+
+.copy-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 5px;
+    font-size: 10px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border: 1px solid black;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+header .logo {
+    width: 150px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    color: #ff6600;
+    transition: color 0.3s ease;
+}
+
+/* Promotional Banner */
+.promo-banner {
+    background-color: #555;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.promo-banner h1 {
+    font-size: 48px;
+}
+
+.promo-banner p {
+    font-size: 20px;
+}
+
+/* Main Content Columns */
+.content-columns {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.column {
+    flex: 1;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease;
+}
+
+.column img {
+    max-width: 100%;
+    height: auto;
+}
+
+.column h2 {
+    font-size: 24px;
+    margin: 20px 0 10px;
+}
+
+.column p {
+    font-size: 16px;
+    color: #666;
+}
+
+.column:hover {
+    transform: scale(1.05);
+}
+
+/* Footer Styling */
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+.footer-logo img {
+    width: 100px;
+}
+
+.footer-text {
+    text-align: right;
+}
+
+.footer-text p {
+    margin: 0;
+}
+
+link{
+    color: #fff;
+    text-decoration: none;
+
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .content-columns {
+        flex-direction: column;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin-bottom: 10px;
+    }
+
+    footer {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+a{
+    color: #000;
+    text-decoration: none;
+}

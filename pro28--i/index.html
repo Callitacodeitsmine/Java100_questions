@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Account Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Bank Account Management System</h1>
+
+    <div id="accountCreation">
+        <h2>Create Account</h2>
+        <form id="createAccountForm">
+            <label>Name: <input type="text" id="name" required></label><br>
+            <label>Address: <input type="text" id="address" required></label><br>
+            <label>Phone: <input type="text" id="phone" required></label><br>
+            <label>Email: <input type="email" id="email" required></label><br>
+            <label>Initial Deposit: <input type="number" id="initialDeposit" required></label><br>
+            <label>Password: <input type="password" id="password" required></label><br>
+            <button type="submit">Create Account</button>
+        </form>
+    </div>
+
+    <div id="accountLogin">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label>Account Number: <input type="text" id="loginAccountNumber" required></label><br>
+            <label>Password: <input type="password" id="loginPassword" required></label><br>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div id="dashboard" style="display: none;">
+        <h2>Dashboard</h2>
+        <p>Welcome, <span id="accountHolderName"></span></p>
+        <p>Account Balance: $<span id="accountBalance"></span></p>
+        <button onclick="logout()">Logout</button><br><br>
+        
+        <h3>Deposit</h3>
+        <form id="depositForm">
+            <label>Amount: <input type="number" id="depositAmount" required></label><br>
+            <button type="submit">Deposit</button>
+        </form>
+        
+        <h3>Withdraw</h3>
+        <form id="withdrawForm">
+            <label>Amount: <input type="number" id="withdrawAmount" required></label><br>
+            <button type="submit">Withdraw</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
