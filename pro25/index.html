@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System (CRUD operations)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .action-btn {
+            margin: 2px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .add-btn {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+
+        .edit-btn {
+            background-color: blue;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Employee Management System (CRUD operations)</h1>
+
+    <form id="employee-form">
+        <label for="employee-name">Name: </label>
+        <input type="text" id="employee-name" placeholder="Enter employee name" required>
+        <label for="employee-age">Age: </label>
+        <input type="number" id="employee-age" placeholder="Enter employee age" required>
+        <label for="Department" id="Category" >Department:</label>
+        <select name="Department" id="Department">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+        </select>
+        <label for="employee-phone">Phone no.</label>
+        <input type="number" id="employee-phone" placeholder="Enter employee number" required>
+        <label for="employee-email">Email: </label>
+        <input type="email" id="employee-email" placeholder="Enter employee Email" required>
+        <label for="employee-DOB">DOB: </label>
+        <input type="date" id="employee-DOB" placeholder="Enter employee DOB" required>
+        <label for="employee-Salary">Salary: </label>
+        <input type="number" id="employee-Salary" placeholder="Enter employee Salary" required>
+        <button type="button" id="add-employee-btn" class="add-btn">Add employee</button>
+    </form>
+
+    <br>
+
+    <table id="employee-table">
+        <thead>
+            <tr>
+                <th>SL. no</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Department</th>
+                <th>Phone no.</th>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>Salary</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>John Doe</td>
+                <td>16</td>
+                <td>volvo</td>
+                <td>9199999999999</td>
+                <td>gg@email.com</td>
+                <td>2024-09-11</td>
+                <td>700000</td>
+                <td>
+                    <button class="action-btn edit-btn" onclick="editemployee(this)">Edit</button>
+                    <button class="action-btn delete-btn" onclick="deleteemployee(this)">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jane Smith</td>
+                <td>17</td>
+                <td>volvo</td>
+                <td>9199999999999</td>
+                <td>gg@email.com</td>
+                <td>2024-09-11</td>
+                <td>700000</td>
+                <td>
+                    <button class="action-btn edit-btn" onclick="editemployee(this)">Edit</button>
+                    <button class="action-btn delete-btn" onclick="deleteemployee(this)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script src="script.js"> </script>
+
+</body>
+
+</html>

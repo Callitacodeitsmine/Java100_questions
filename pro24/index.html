@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Inventory System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .action-btn {
+            margin: 2px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .add-btn {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+
+        .edit-btn {
+            background-color: blue;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Basic Inventory System</h1>
+
+    <!-- Form to add new students -->
+    <form id="student-form">
+        <input type="text" id="student-name" placeholder="Enter student name" required>
+        <input type="number" id="student-age" placeholder="Enter student age" required>
+        <input type="text" id="student-class" placeholder="Enter student class" required>
+        <label for="cars" id="Category" >Choose a car:</label>
+        <select name="cars" id="cars">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+        </select>
+
+        <button type="button" id="add-student-btn" class="add-btn">Add Student</button>
+    </form>
+
+    <br>
+
+    <table id="student-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Class</th>
+                <th>Category</th>
+                <th>Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>John Doe</td>
+                <td>16</td>
+                <td>10th Grade</td>
+                <td>volvo</td>
+                <td>
+                    <button class="action-btn edit-btn" onclick="editStudent(this)">Edit</button>
+                    <button class="action-btn delete-btn" onclick="deleteStudent(this)">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Jane Smith</td>
+                <td>17</td>
+                <td>11th Grade</td>
+                <td>saab</td>
+                <td>
+                    <button class="action-btn edit-btn" onclick="editStudent(this)">Edit</button>
+                    <button class="action-btn delete-btn" onclick="deleteStudent(this)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script src="script.js"> </script>
+
+</body>
+
+</html>
