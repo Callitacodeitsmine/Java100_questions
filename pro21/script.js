@@ -1,86 +1,99 @@
-let accounts = [];
-let loggedInAccount = null;
+document.addEventListener('DOMContentLoaded', function() {
+    const createAccountForm = document.getElementById('createAccountForm');
+    const loginForm = document.getElementById('loginForm');
+    const accountCreationDiv = document.getElementById('accountCreation');
+    const loginSectionDiv = document.getElementById('loginSection');
+    const dashboardDiv = document.getElementById('dashboard');
 
-document.getElementById('createAccountForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+    let account = null; // Placeholder for account information
 
-    const name = document.getElementById('name').value;
-    const address = document.getElementById('address').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const initialDeposit = parseFloat(document.getElementById('initialDeposit').value);
-    const password = document.getElementById('password').value;
+    // Handle account creation
+    createAccountForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form from submitting the traditional way
 
-    const accountNumber = 'ACC' + Math.floor(Math.random() * 1000000);
-    const account = {
-        accountNumber,
-        name,
-        address,
-        phone,
-        email,
-        balance: initialDeposit,
-        password
+        // Get account details
+        const name = document.getElementById('name').value;
+        const address = document.getElementById('address').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const initialDeposit = parseFloat(document.getElementById('initialDeposit').value);
+        const password = document.getElementById('password').value;
+
+        // Create the account (you can store this info however you want, like a backend or localStorage)
+        account = {
+            name,
+            address,
+            phone,
+            email,
+            balance: initialDeposit,
+            password,
+            accountNumber: Math.floor(Math.random() * 1000000) // Generate a random account number
+        };
+
+        alert(`Account created successfully! Your account number is ${account.accountNumber}`);
+
+        // Clear form inputs
+        createAccountForm.reset();
+
+        // Hide account creation and show the login form
+        accountCreationDiv.style.display = 'none';
+        loginSectionDiv.style.display = 'block';
+    });
+
+    // Handle login
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form from submitting the traditional way
+
+        const enteredAccountNumber = document.getElementById('loginAccountNumber').value;
+        const enteredPassword = document.getElementById('loginPassword').value;
+
+        // Check if the entered credentials match the created account
+        if (account && account.accountNumber == enteredAccountNumber && account.password === enteredPassword) {
+
+            // Hide login form and show the dashboard
+            loginSectionDiv.style.display = 'none';
+            dashboardDiv.style.display = 'block';
+
+            // Update dashboard with account info
+            document.getElementById('accountHolderName').textContent = account.name;
+            document.getElementById('accountBalance').textContent = account.balance.toFixed(2);
+        } else {
+            alert('Invalid account number or password. Please try again.');
+        }
+    });
+
+    // Handle logout
+    window.logout = function() {
+        // Hide dashboard and show login form again
+        dashboardDiv.style.display = 'none';
+        loginSectionDiv.style.display = 'block';
     };
 
-    accounts.push(account);
-    alert(`Account created successfully! Your Account Number is ${accountNumber}.`);
-    document.getElementById('createAccountForm').reset();
+    // Handle deposit
+    document.getElementById('depositForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const depositAmount = parseFloat(document.getElementById('depositAmount').value);
+
+        if (depositAmount > 0) {
+            account.balance += depositAmount;
+            document.getElementById('accountBalance').textContent = account.balance.toFixed(2);
+            alert(`Successfully deposited $${depositAmount.toFixed(2)}`);
+        } else {
+            alert('Please enter a valid deposit amount.');
+        }
+    });
+
+    // Handle withdrawal
+    document.getElementById('withdrawForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const withdrawAmount = parseFloat(document.getElementById('withdrawAmount').value);
+
+        if (withdrawAmount > 0 && withdrawAmount <= account.balance) {
+            account.balance -= withdrawAmount;
+            document.getElementById('accountBalance').textContent = account.balance.toFixed(2);
+            alert(`Successfully withdrew $${withdrawAmount.toFixed(2)}`);
+        } else {
+            alert('Invalid withdrawal amount. Please ensure you have sufficient funds.');
+        }
+    });
 });
-
-document.getElementById('loginForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const accountNumber = document.getElementById('loginAccountNumber').value;
-    const password = document.getElementById('loginPassword').value;
-
-    const account = accounts.find(acc => acc.accountNumber === accountNumber && acc.password === password);
-
-    if (account) {
-        loggedInAccount = account;
-        document.getElementById('accountHolderName').textContent = account.name;
-        document.getElementById('accountBalance').textContent = account.balance.toFixed(2);
-        document.getElementById('dashboard').style.display = 'block';
-        document.getElementById('accountLogin').style.display = 'none';
-        document.getElementById('accountCreation').style.display = 'none';
-    } else {
-        alert('Invalid account number or password');
-    }
-});
-
-document.getElementById('depositForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const amount = parseFloat(document.getElementById('depositAmount').value);
-
-    if (amount > 0 && loggedInAccount) {
-        loggedInAccount.balance += amount;
-        document.getElementById('accountBalance').textContent = loggedInAccount.balance.toFixed(2);
-        alert(`Successfully deposited $${amount}`);
-        document.getElementById('depositForm').reset();
-    } else {
-        alert('Invalid deposit amount.');
-    }
-});
-
-document.getElementById('withdrawForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const amount = parseFloat(document.getElementById('withdrawAmount').value);
-
-    if (amount > 0 && loggedInAccount && loggedInAccount.balance >= amount) {
-        loggedInAccount.balance -= amount;
-        document.getElementById('accountBalance').textContent = loggedInAccount.balance.toFixed(2);
-        alert(`Successfully withdrew $${amount}`);
-        document.getElementById('withdrawForm').reset();
-    } else {
-        alert('Invalid withdrawal amount or insufficient funds.');
-    }
-});
-
-function logout() {
-    loggedInAccount = null;
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('accountLogin').style.display = 'block';
-    document.getElementById('accountCreation').style.display = 'block';
-    alert('Logged out successfully');
-}

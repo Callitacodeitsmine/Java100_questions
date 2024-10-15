@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const wordCount = countWords(inputString);
         const lineCount = countLines(inputString);
 
-        document.getElementById('Total_length').textContent = totalLength;
-        document.getElementById('Characters').textContent = totalLength;
-        document.getElementById('Words').textContent = wordCount;
-        document.getElementById('Lines').textContent = lineCount;
+        document.getElementById('Total_length').textContent += totalLength;
+        document.getElementById('Characters').textContent += totalLength;
+        document.getElementById('Words').textContent += wordCount;
+        document.getElementById('Lines').textContent += lineCount;
     });
 
     function reverseString(str) {
