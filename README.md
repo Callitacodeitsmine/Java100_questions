@@ -1,6 +1,6 @@
 ## Java100_questions
 
-Navigation : 
+Navigation : https://callitacodeitsmine.github.io/Java100_questions/
 
 
 Beginner Projects
