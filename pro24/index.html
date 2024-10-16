@@ -12,20 +12,20 @@
 
     <h1>Basic Inventory System</h1>
 
-    <!-- Form to add new students -->
     <form id="student-form">
-        <input type="text" id="student-name" placeholder="Enter student name" required>
-        <input type="number" id="student-age" placeholder="Enter student age" required>
-        <input type="text" id="student-class" placeholder="Enter student class" required>
-        <label for="cars" id="Category" >Choose a car:</label>
+        <input type="text" id="student-name" placeholder="Enter Item name" required>
+        <input type="number" id="student-age" placeholder="Enter Item Quantity" required>
+        <input type="number" id="student-class" placeholder="Enter Price" required>
+        <label for="cars" id="Category" >Select Category:</label>
         <select name="cars" id="cars">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
+            <option value="Art">Art</option>
+            <option value="Home">Home Appliance</option>
+            <option value="Decoration">Decoration</option>
+            <option value="clothes">clothes</option>
+            <option value="Collage">Collage</option>
         </select>
 
-        <button type="button" id="add-student-btn" class="add-btn">Add Student</button>
+        <button type="button" id="add-student-btn" class="add-btn">Add Item</button>
     </form>
 
     <br>
@@ -34,9 +34,9 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Class</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price (Rs.)</th>
                 <th>Category</th>
                 <th>Actions</th>
 
@@ -45,10 +45,10 @@
         <tbody>
             <tr>
                 <td>1</td>
-                <td>John Doe</td>
+                <td>Bags</td>
                 <td>16</td>
-                <td>10th Grade</td>
-                <td>volvo</td>
+                <td>2,000</td>
+                <td>Collage</td>
                 <td>
                     <button class="action-btn edit-btn" onclick="editStudent(this)">Edit</button>
                     <button class="action-btn delete-btn" onclick="deleteStudent(this)">Delete</button>
@@ -56,10 +56,10 @@
             </tr>
             <tr>
                 <td>2</td>
-                <td>Jane Smith</td>
+                <td>Tops</td>
                 <td>17</td>
-                <td>11th Grade</td>
-                <td>saab</td>
+                <td>400</td>
+                <td>clothes</td>
                 <td>
                     <button class="action-btn edit-btn" onclick="editStudent(this)">Edit</button>
                     <button class="action-btn delete-btn" onclick="deleteStudent(this)">Delete</button>

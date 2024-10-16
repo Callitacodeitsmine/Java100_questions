@@ -5,52 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Management System (CRUD operations)</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .action-btn {
-            margin: 2px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-
-        .add-btn {
-            background-color: green;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-        }
-
-        .edit-btn {
-            background-color: blue;
-            color: white;
-        }
-
-        .delete-btn {
-            background-color: red;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -64,10 +19,11 @@
         <input type="number" id="employee-age" placeholder="Enter employee age" required>
         <label for="Department" id="Category" >Department:</label>
         <select name="Department" id="Department">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
+            <option value="HR">HR</option>
+            <option value="Design">Design</option>
+            <option value="Techinical">Techinical</option>
+            <option value="Testing">Testing</option>
+            <option value="QE">Quality Engineer</option>
         </select>
         <label for="employee-phone">Phone no.</label>
         <input type="number" id="employee-phone" placeholder="Enter employee number" required>
@@ -102,7 +58,7 @@
                 <td>1</td>
                 <td>John Doe</td>
                 <td>16</td>
-                <td>volvo</td>
+                <td>HR</td>
                 <td>9199999999999</td>
                 <td>gg@email.com</td>
                 <td>2024-09-11</td>
@@ -116,7 +72,7 @@
                 <td>2</td>
                 <td>Jane Smith</td>
                 <td>17</td>
-                <td>volvo</td>
+                <td>Designer</td>
                 <td>9199999999999</td>
                 <td>gg@email.com</td>
                 <td>2024-09-11</td>

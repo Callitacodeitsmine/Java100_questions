@@ -41,10 +41,11 @@ th {
     text-decoration: none;
     border-radius: 6px;
 }
-#student-form{
+form{
     text-align: center;
     justify-content: center;
 }
+
 .delete-btn {
     background-color: #bc4749;
     color: white;

@@ -1,55 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank Account Management System</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Sudoku Solver</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>Bank Account Management System</h1>
+    <h1>Sudoku Solver</h1>
+    <table id="sudoku-table">
+        <tbody></tbody>
+    </table>
 
-    <div id="accountCreation">
-        <h2>Create Account</h2>
-        <form id="createAccountForm">
-            <label>Name: <input type="text" id="name" required></label><br>
-            <label>Address: <input type="text" id="address" required></label><br>
-            <label>Phone: <input type="text" id="phone" required></label><br>
-            <label>Email: <input type="email" id="email" required></label><br>
-            <label>Initial Deposit: <input type="number" id="initialDeposit" required></label><br>
-            <label>Password: <input type="password" id="password" required></label><br>
-            <button type="submit">Create Account</button>
-        </form>
+    <br>
+    <div>
+    <button id="submit-btn">Submit</button>
+    </div>
+    <br>
+    <div>
+        <button id="solve-btn">Solve</button>
     </div>
 
-    <div id="accountLogin">
-        <h2>Login</h2>
-        <form id="loginForm">
-            <label>Account Number: <input type="text" id="loginAccountNumber" required></label><br>
-            <label>Password: <input type="password" id="loginPassword" required></label><br>
-            <button type="submit">Login</button>
-        </form>
-    </div>
+    <script>
+        const tableBody = document.querySelector('table tbody');
 
-    <div id="dashboard" style="display: none;">
-        <h2>Dashboard</h2>
-        <p>Welcome, <span id="accountHolderName"></span></p>
-        <p>Account Balance: $<span id="accountBalance"></span></p>
-        <button onclick="logout()">Logout</button><br><br>
-        
-        <h3>Deposit</h3>
-        <form id="depositForm">
-            <label>Amount: <input type="number" id="depositAmount" required></label><br>
-            <button type="submit">Deposit</button>
-        </form>
-        
-        <h3>Withdraw</h3>
-        <form id="withdrawForm">
-            <label>Amount: <input type="number" id="withdrawAmount" required></label><br>
-            <button type="submit">Withdraw</button>
-        </form>
-    </div>
+        // Function to create the 9x9 Sudoku board
+        function createSudokuBoard() {
+            for (let i = 0; i < 9; i++) {
+                let row = document.createElement('tr');
+                for (let j = 0; j < 9; j++) {
+                    let cell = document.createElement('td');
+                    let button = document.createElement('button');
+                    button.innerText = ''; // Initially empty
+                    button.dataset.row = i;
+                    button.dataset.col = j;
+                    button.dataset.value = 0; // Store the current value
+                    button.classList.add('sudoku-cell');
 
-    <script src="script.js"></script>
+                    // Button click to cycle through numbers 1-9
+                    button.addEventListener('click', function () {
+                        let currentValue = parseInt(button.dataset.value);
+                        currentValue = (currentValue % 9) + 1; // Cycle from 1-9
+                        button.dataset.value = currentValue;
+                        button.innerText = currentValue;
+
+                        // Check for conflicts and update the button color
+                        if (hasConflict(i, j, currentValue)) {
+                            button.classList.add('conflict');
+                        } else {
+                            button.classList.remove('conflict');
+                        }
+                    });
+
+                    cell.appendChild(button);
+                    row.appendChild(cell);
+
+                    if ((j + 1) % 3 === 0 && j < 8) {
+                        let gap = document.createElement('td');
+                        gap.classList.add('gap');
+                        row.appendChild(gap);
+                    }
+                }
+                tableBody.appendChild(row);
+
+                if ((i + 1) % 3 === 0 && i < 8) {
+                    let gapRow = document.createElement('tr');
+                    let gapCell = document.createElement('td');
+                    gapCell.setAttribute('colspan', '13');
+                    gapCell.classList.add('gap');
+                    gapRow.appendChild(gapCell);
+                    tableBody.appendChild(gapRow);
+                }
+            }
+        }
+
+        createSudokuBoard();
+
+        // Function to get the current state of the Sudoku board
+        function getSudokuBoard() {
+            const board = [];
+            const buttons = document.querySelectorAll('.sudoku-cell');
+            let index = 0;
+            for (let i = 0; i < 9; i++) {
+                const row = [];
+                for (let j = 0; j < 9; j++) {
+                    row.push(parseInt(buttons[index++].dataset.value));
+                }
+                board.push(row);
+            }
+            return board;
+        }
+
+        // Function to check if it's safe to place a number in a specific cell
+        function isSafe(board, row, col, num) {
+            // Check the row
+            for (let i = 0; i < 9; i++) {
+                if (board[row][i] === num) return false;
+            }
+
+            // Check the column
+            for (let i = 0; i < 9; i++) {
+                if (board[i][col] === num) return false;
+            }
+
+            // Check the 3x3 grid
+            const startRow = row - row % 3;
+            const startCol = col - col % 3;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (board[startRow + i][startCol + j] === num) return false;
+                }
+            }
+
+            return true;
+        }
+
+        // Backtracking Sudoku Solver
+        function solveSudoku(board) {
+            for (let row = 0; row < 9; row++) {
+                for (let col = 0; col < 9; col++) {
+                    if (board[row][col] === 0) {
+                        for (let num = 1; num <= 9; num++) {
+                            if (isSafe(board, row, col, num)) {
+                                board[row][col] = num;
+
+                                if (solveSudoku(board)) {
+                                    return true;
+                                }
+
+                                board[row][col] = 0; // Backtrack
+                            }
+                        }
+                        return false; // Trigger backtracking
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Function to set the solved board back into the UI
+        function setBoardToUI(board) {
+            const buttons = document.querySelectorAll('.sudoku-cell');
+            let index = 0;
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    buttons[index].dataset.value = board[i][j];
+                    buttons[index].innerText = board[i][j] === 0 ? '' : board[i][j];
+                    index++;
+                }
+            }
+        }
+
+        // Solve button to solve the Sudoku board
+        document.getElementById('solve-btn').addEventListener('click', () => {
+            const board = getSudokuBoard();
+            if (solveSudoku(board)) {
+                setBoardToUI(board);
+            } else {
+                alert('No solution exists.');
+            }
+        });
+
+        // Function to check if there's a conflict in the current state
+        function hasConflict(row, col, num) {
+            const board = getSudokuBoard();
+
+            // Check row
+            for (let i = 0; i < 9; i++) {
+                if (i !== col && board[row][i] === num) {
+                    return true;
+                }
+            }
+
+            // Check column
+            for (let i = 0; i < 9; i++) {
+                if (i !== row && board[i][col] === num) {
+                    return true;
+                }
+            }
+
+            // Check 3x3 grid
+            const startRow = row - row % 3;
+            const startCol = col - col % 3;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if ((startRow + i !== row || startCol + j !== col) && board[startRow + i][startCol + j] === num) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        // Submit button to check if the Sudoku board is valid (pass/fail)
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            const board = getSudokuBoard();
+            let isValid = true;
+
+            // Check for conflicts and mark invalid cells
+            const buttons = document.querySelectorAll('.sudoku-cell');
+            buttons.forEach((button, index) => {
+                const row = Math.floor(index / 9);
+                const col = index % 9;
+                const value = parseInt(button.dataset.value);
+
+                if (value === 0 || hasConflict(row, col, value)) {
+                    button.classList.add('conflict');
+                    isValid = false;
+                }
+            });
+
+            if (isValid) {
+                alert('Success! The Sudoku is solved correctly.');
+            } else {
+                alert('There are errors in the Sudoku board.');
+            }
+        });
+    </script>
 </body>
+
 </html>
