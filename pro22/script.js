@@ -22,7 +22,7 @@ document.getElementById('add-student-btn').addEventListener('click', function ()
 
         document.getElementById('student-form').reset();
     } else {
-        alert('Please fill in all fields');
+        showAlert('Please fill in all fields');
     }
 });
 
@@ -44,6 +44,17 @@ function editStudent(button) {
         cells[2].innerText = age;
         cells[3].innerText = studentClass;
     } else {
-        alert('Please enter valid values for all fields');
+        showAlert('Please enter valid values for all fields');
     }
+}
+
+// Function to show the custom alert
+function showAlert(message) {
+    document.getElementById('alert-message').innerText = message;
+    document.getElementById('custom-alert').style.display = 'flex';
+}
+
+// Function to close the custom alert
+function closeAlert() {
+    document.getElementById('custom-alert').style.display = 'none';
 }

@@ -4,58 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Management System (Borrow, Return Books)</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .action-btn {
-            margin: 2px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .add-btn {
-            background-color: green;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-        }
-        .Return-btn {
-            background-color: blue;
-            color: white;
-        }
-        .Burrow-btn {
-            background-color: red;
-            color: white;
-        }
-        .disabled {
-            background-color: grey;
-            cursor: not-allowed;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <h1>Library Management System (Borrow, Return Books)</h1>
 
     <form id="student-form">
-        <input type="text" id="student-name" placeholder="Enter student name" required>
-        <input type="number" id="student-age" placeholder="Enter student age" required>
-        <input type="text" id="student-class" placeholder="Enter student class" required>
-        <button type="button" id="add-student-btn" class="add-btn">Add Student</button>
+        <input type="text" id="student-name" placeholder="Enter Book name" required>
+        <input type="number" id="student-age" placeholder="Enter Book ID" required>
+        <input type="text" id="student-class" placeholder="Enter Shelf No" required>
+        <button type="button" id="add-student-btn" class="add-btn">Add Book</button>
     </form>
 
     <br>

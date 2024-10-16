@@ -16,11 +16,11 @@ document.getElementById('add-student-btn').addEventListener('click', function ()
             <td>${name}</td>
             <td>${age}</td>
             <td>${studentClass}</td>
+            <td>${category}</td>
             <td>
                 <button class="action-btn edit-btn" onclick="editStudent(this)">Edit</button>
                 <button class="action-btn delete-btn" onclick="deleteStudent(this)">Delete</button>
             </td>
-            <td>${category}</td>
         `;
 
         document.getElementById('student-form').reset();

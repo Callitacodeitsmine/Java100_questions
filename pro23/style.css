@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #c7f9cc;
+}
+h1 {
+    text-align: center;
+    color: #22577a;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid black;
+    background-color: #80ed99;
+    text-align: center;
+}
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+th {
+    background-color: #22577a;
+    color: white;
+    text-align: center;
+}
+.action-btn {
+    margin: 2px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.add-btn {
+    background-color: #57cc99;
+    color: black;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+}
+.Return-btn {
+    background-color: #06d6a0;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+}
+.Burrow-btn {
+    background-color: #e63946;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+}
+.disabled {
+    background-color: grey;
+    cursor: not-allowed;
+}
+input{
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    text-align: center;
+}
+
+#student-form{
+    text-align: center;
+    justify-content: center;
+}
+
+/* Hide default radio button appearance */
+input[type="radio"] {
+    appearance: none;  /* Remove default styling */
+    -webkit-appearance: none; /* For Safari */
+    border: 2px solid #22577a;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    padding: 7px 7px;
+    border-radius: 0px;    
+}
+
+/* Add hover effect */
+input[type="radio"]:hover {
+    border-color: #22577a;  /* Darken border on hover */
+}
+
+/* When the radio button is checked */
+input[type="radio"]:checked {
+    background-color: #007bff;
+    border-color: #22577a;
+}
+
+input[type = "date"] {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    text-align: center;
+    color: black;
+}
