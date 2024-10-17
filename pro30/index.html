@@ -78,7 +78,6 @@
 
         createSudokuBoard();
 
-        // Function to get the current state of the Sudoku board
         function getSudokuBoard() {
             const board = [];
             const buttons = document.querySelectorAll('.sudoku-cell');
@@ -93,19 +92,15 @@
             return board;
         }
 
-        // Function to check if it's safe to place a number in a specific cell
         function isSafe(board, row, col, num) {
-            // Check the row
             for (let i = 0; i < 9; i++) {
                 if (board[row][i] === num) return false;
             }
 
-            // Check the column
             for (let i = 0; i < 9; i++) {
                 if (board[i][col] === num) return false;
             }
 
-            // Check the 3x3 grid
             const startRow = row - row % 3;
             const startCol = col - col % 3;
             for (let i = 0; i < 3; i++) {
@@ -117,7 +112,6 @@
             return true;
         }
 
-        // Backtracking Sudoku Solver
         function solveSudoku(board) {
             for (let row = 0; row < 9; row++) {
                 for (let col = 0; col < 9; col++) {
@@ -130,17 +124,16 @@
                                     return true;
                                 }
 
-                                board[row][col] = 0; // Backtrack
+                                board[row][col] = 0;
                             }
                         }
-                        return false; // Trigger backtracking
+                        return false; 
                     }
                 }
             }
             return true;
         }
 
-        // Function to set the solved board back into the UI
         function setBoardToUI(board) {
             const buttons = document.querySelectorAll('.sudoku-cell');
             let index = 0;
@@ -153,7 +146,6 @@
             }
         }
 
-        // Solve button to solve the Sudoku board
         document.getElementById('solve-btn').addEventListener('click', () => {
             const board = getSudokuBoard();
             if (solveSudoku(board)) {
@@ -163,25 +155,21 @@
             }
         });
 
-        // Function to check if there's a conflict in the current state
         function hasConflict(row, col, num) {
             const board = getSudokuBoard();
 
-            // Check row
             for (let i = 0; i < 9; i++) {
                 if (i !== col && board[row][i] === num) {
                     return true;
                 }
             }
 
-            // Check column
             for (let i = 0; i < 9; i++) {
                 if (i !== row && board[i][col] === num) {
                     return true;
                 }
             }
 
-            // Check 3x3 grid
             const startRow = row - row % 3;
             const startCol = col - col % 3;
             for (let i = 0; i < 3; i++) {
@@ -195,12 +183,10 @@
             return false;
         }
 
-        // Submit button to check if the Sudoku board is valid (pass/fail)
         document.getElementById('submit-btn').addEventListener('click', () => {
             const board = getSudokuBoard();
             let isValid = true;
 
-            // Check for conflicts and mark invalid cells
             const buttons = document.querySelectorAll('.sudoku-cell');
             buttons.forEach((button, index) => {
                 const row = Math.floor(index / 9);

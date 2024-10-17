@@ -1,86 +1,71 @@
-let accounts = [];
-let loggedInAccount = null;
+const container = document.querySelector('.seat-container');
+const seats = document.querySelectorAll('.row .seat:not(.occupied)');
+const count = document.getElementById('count');
+const total = document.getElementById('total');
+const movieSelect = document.getElementById('movie');
+const confirmButton = document.getElementById('confirmButton');
 
-document.getElementById('createAccountForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+let ticketPrice = +movieSelect.value;
 
-    const name = document.getElementById('name').value;
-    const address = document.getElementById('address').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const initialDeposit = parseFloat(document.getElementById('initialDeposit').value);
-    const password = document.getElementById('password').value;
+function updateSelectedCount() {
+    const selectedSeats = document.querySelectorAll('.row .seat.selected');
+    const selectedSeatsCount = selectedSeats.length;
 
-    const accountNumber = 'ACC' + Math.floor(Math.random() * 1000000);
-    const account = {
-        accountNumber,
-        name,
-        address,
-        phone,
-        email,
-        balance: initialDeposit,
-        password
-    };
-
-    accounts.push(account);
-    alert(`Account created successfully! Your Account Number is ${accountNumber}.`);
-    document.getElementById('createAccountForm').reset();
-});
-
-document.getElementById('loginForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const accountNumber = document.getElementById('loginAccountNumber').value;
-    const password = document.getElementById('loginPassword').value;
-
-    const account = accounts.find(acc => acc.accountNumber === accountNumber && acc.password === password);
-
-    if (account) {
-        loggedInAccount = account;
-        document.getElementById('accountHolderName').textContent = account.name;
-        document.getElementById('accountBalance').textContent = account.balance.toFixed(2);
-        document.getElementById('dashboard').style.display = 'block';
-        document.getElementById('accountLogin').style.display = 'none';
-        document.getElementById('accountCreation').style.display = 'none';
-    } else {
-        alert('Invalid account number or password');
-    }
-});
-
-document.getElementById('depositForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const amount = parseFloat(document.getElementById('depositAmount').value);
-
-    if (amount > 0 && loggedInAccount) {
-        loggedInAccount.balance += amount;
-        document.getElementById('accountBalance').textContent = loggedInAccount.balance.toFixed(2);
-        alert(`Successfully deposited $${amount}`);
-        document.getElementById('depositForm').reset();
-    } else {
-        alert('Invalid deposit amount.');
-    }
-});
-
-document.getElementById('withdrawForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const amount = parseFloat(document.getElementById('withdrawAmount').value);
-
-    if (amount > 0 && loggedInAccount && loggedInAccount.balance >= amount) {
-        loggedInAccount.balance -= amount;
-        document.getElementById('accountBalance').textContent = loggedInAccount.balance.toFixed(2);
-        alert(`Successfully withdrew $${amount}`);
-        document.getElementById('withdrawForm').reset();
-    } else {
-        alert('Invalid withdrawal amount or insufficient funds.');
-    }
-});
-
-function logout() {
-    loggedInAccount = null;
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('accountLogin').style.display = 'block';
-    document.getElementById('accountCreation').style.display = 'block';
-    alert('Logged out successfully');
+    count.innerText = selectedSeatsCount;
+    total.innerText = selectedSeatsCount * ticketPrice;
 }
+
+function generateRandomQRCode() {
+    const qr = new QRious({
+        value: Math.random().toString(36).substring(2, 10).toUpperCase(),
+        size: 100
+    });
+    return qr.toDataURL();
+}
+
+function generatePDF(selectedSeats, movie, totalPrice) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const qrCodeDataUrl = generateRandomQRCode();
+
+    doc.text(`Movie: ${movie}`, 10, 10);
+    doc.text(`Seats: ${selectedSeats.join(', ')}`, 10, 20);
+    doc.text(`Total Price: $${totalPrice}`, 10, 30);
+
+    // Adding QR code to the PDF
+    doc.addImage(qrCodeDataUrl, 'PNG', 10, 40, 50, 50);
+
+    doc.save('movie_ticket.pdf');
+}
+
+movieSelect.addEventListener('change', (e) => {
+    ticketPrice = +e.target.value;
+    updateSelectedCount();
+});
+
+container.addEventListener('click', (e) => {
+    if (e.target.classList.contains('seat') && !e.target.classList.contains('occupied')) {
+        e.target.classList.toggle('selected');
+        updateSelectedCount();
+    }
+});
+
+confirmButton.addEventListener('click', () => {
+    const selectedSeats = document.querySelectorAll('.row .seat.selected');
+    const selectedSeatsIndex = [...selectedSeats].map(seat => [...seats].indexOf(seat));
+
+    if (selectedSeatsIndex.length === 0) {
+        alert('Please select at least one seat.');
+        return;
+    }
+
+    const movie = movieSelect.options[movieSelect.selectedIndex].text;
+    const totalPrice = count.innerText * ticketPrice;
+
+    const confirmation = confirm(`Confirm your selection:\nMovie: ${movie}\nSeats: ${selectedSeatsIndex.join(', ')}\nTotal: $${totalPrice}`);
+    if (confirmation) {
+        const selectedSeatNumbers = selectedSeatsIndex.map(index => `Seat ${index + 1}`);
+        generatePDF(selectedSeatNumbers, movie, totalPrice);
+    }
+});

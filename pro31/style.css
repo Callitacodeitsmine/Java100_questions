@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.container {
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.seat-container {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.screen {
+    background-color: #444;
+    height: 70px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.seat {
+    background-color: #444;
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.seat.selected {
+    background-color: #6feaf6;
+}
+
+.seat.occupied {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.text {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+#confirmButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}

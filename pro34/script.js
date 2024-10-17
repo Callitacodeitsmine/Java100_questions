@@ -1,86 +1,69 @@
-let accounts = [];
-let loggedInAccount = null;
+const calendarBody = document.getElementById('calendarBody');
+const monthYear = document.getElementById('monthYear');
+const prevButton = document.getElementById('prev');
+const nextButton = document.getElementById('next');
 
-document.getElementById('createAccountForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+let currentDate = new Date();
+let currentMonth = currentDate.getMonth();
+let currentYear = currentDate.getFullYear();
 
-    const name = document.getElementById('name').value;
-    const address = document.getElementById('address').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const initialDeposit = parseFloat(document.getElementById('initialDeposit').value);
-    const password = document.getElementById('password').value;
+const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
 
-    const accountNumber = 'ACC' + Math.floor(Math.random() * 1000000);
-    const account = {
-        accountNumber,
-        name,
-        address,
-        phone,
-        email,
-        balance: initialDeposit,
-        password
-    };
+function renderCalendar(month, year) {
+    calendarBody.innerHTML = ''; // Clear the calendar
+    monthYear.innerText = `${months[month]} ${year}`;
 
-    accounts.push(account);
-    alert(`Account created successfully! Your Account Number is ${accountNumber}.`);
-    document.getElementById('createAccountForm').reset();
-});
+    const firstDay = new Date(year, month, 1).getDay(); // Get first day of the month
+    const daysInMonth = new Date(year, month + 1, 0).getDate(); // Get total days in the month
 
-document.getElementById('loginForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+    let date = 1;
+    for (let i = 0; i < 6; i++) { // Create calendar rows
+        const row = document.createElement('tr');
 
-    const accountNumber = document.getElementById('loginAccountNumber').value;
-    const password = document.getElementById('loginPassword').value;
+        for (let j = 0; j < 7; j++) { // Create calendar columns (days)
+            const cell = document.createElement('td');
 
-    const account = accounts.find(acc => acc.accountNumber === accountNumber && acc.password === password);
-
-    if (account) {
-        loggedInAccount = account;
-        document.getElementById('accountHolderName').textContent = account.name;
-        document.getElementById('accountBalance').textContent = account.balance.toFixed(2);
-        document.getElementById('dashboard').style.display = 'block';
-        document.getElementById('accountLogin').style.display = 'none';
-        document.getElementById('accountCreation').style.display = 'none';
-    } else {
-        alert('Invalid account number or password');
+            if (i === 0 && j < firstDay) {
+                // Empty cells for days before the start of the month
+                cell.innerHTML = '';
+            } else if (date > daysInMonth) {
+                break;
+            } else {
+                cell.innerHTML = date;
+                // Highlight current day
+                if (date === currentDate.getDate() && month === currentDate.getMonth() && year === currentDate.getFullYear()) {
+                    cell.classList.add('today');
+                }
+                date++;
+            }
+            row.appendChild(cell);
+        }
+        calendarBody.appendChild(row); // Append row to the calendar body
     }
-});
-
-document.getElementById('depositForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const amount = parseFloat(document.getElementById('depositAmount').value);
-
-    if (amount > 0 && loggedInAccount) {
-        loggedInAccount.balance += amount;
-        document.getElementById('accountBalance').textContent = loggedInAccount.balance.toFixed(2);
-        alert(`Successfully deposited $${amount}`);
-        document.getElementById('depositForm').reset();
-    } else {
-        alert('Invalid deposit amount.');
-    }
-});
-
-document.getElementById('withdrawForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const amount = parseFloat(document.getElementById('withdrawAmount').value);
-
-    if (amount > 0 && loggedInAccount && loggedInAccount.balance >= amount) {
-        loggedInAccount.balance -= amount;
-        document.getElementById('accountBalance').textContent = loggedInAccount.balance.toFixed(2);
-        alert(`Successfully withdrew $${amount}`);
-        document.getElementById('withdrawForm').reset();
-    } else {
-        alert('Invalid withdrawal amount or insufficient funds.');
-    }
-});
-
-function logout() {
-    loggedInAccount = null;
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('accountLogin').style.display = 'block';
-    document.getElementById('accountCreation').style.display = 'block';
-    alert('Logged out successfully');
 }
+
+function prevMonth() {
+    currentMonth--;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    }
+    renderCalendar(currentMonth, currentYear);
+}
+
+function nextMonth() {
+    currentMonth++;
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    renderCalendar(currentMonth, currentYear);
+}
+
+prevButton.addEventListener('click', prevMonth);
+nextButton.addEventListener('click', nextMonth);
+
+renderCalendar(currentMonth, currentYear); // Initial rendering of the calendar
