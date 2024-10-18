@@ -29,13 +29,43 @@ function generatePDF(selectedSeats, movie, totalPrice) {
 
     const qrCodeDataUrl = generateRandomQRCode();
 
-    doc.text(`Movie: ${movie}`, 10, 10);
-    doc.text(`Seats: ${selectedSeats.join(', ')}`, 10, 20);
-    doc.text(`Total Price: $${totalPrice}`, 10, 30);
+    // Adding a custom font and styling to the PDF
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0, 102, 204); // Blue header text
+    doc.setFontSize(18);
 
-    // Adding QR code to the PDF
-    doc.addImage(qrCodeDataUrl, 'PNG', 10, 40, 50, 50);
+    // Header section
+    doc.text('Movie Ticket', 105, 20, null, null, 'center'); // Centered title
+    doc.setDrawColor(0, 102, 204); // Blue border for header
+    doc.line(20, 25, 190, 25); // Horizontal line for header
 
+    // Movie details
+    doc.setFontSize(14);
+    doc.setTextColor(33, 33, 33); // Regular black text
+    doc.text(`Movie: ${movie}`, 20, 40);
+    doc.text(`Selected Seats: ${selectedSeats.join(', ')}`, 20, 50);
+    doc.text(`Total Price: $${totalPrice}`, 20, 60);
+
+    // Adding a background rectangle for the QR code section
+    doc.setDrawColor(0, 102, 204);
+    doc.setFillColor(240, 248, 255); // Light blue background
+    doc.rect(20, 70, 60, 60, 'F'); // QR code box background
+
+    // Adding QR code image to the PDF
+    doc.addImage(qrCodeDataUrl, 'PNG', 25, 75, 50, 50);
+
+    // Adding a footer
+    doc.setTextColor(128, 128, 128); // Gray text
+    doc.setFontSize(10);
+    doc.text('Thank you for booking with us!', 105, 150, null, null, 'center');
+    doc.text('Enjoy the movie!', 105, 160, null, null, 'center');
+
+    // Optional: draw a border around the ticket
+    doc.setDrawColor(0, 102, 204); // Blue border
+    doc.setLineWidth(1);
+    doc.rect(10, 10, 190, 170); // Border of the ticket
+
+    // Save the PDF
     doc.save('movie_ticket.pdf');
 }
 
